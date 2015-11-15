@@ -4,19 +4,21 @@
 
 function getMessage(a, b){
   if (typeof a === 'boolean') {
-    if (a === true)
+    if (a === true) {
       return 'Переданное GIF-изображение анимировано и содержит ' + b + ' кадров';
-    else
+    }
+    else {
       return 'Переданное GIF-изображение не анимировано';
+    }
   }
-  if (typeof a === 'number')
+  if (typeof a === 'number') {
     return 'Переданное SVG-изображение содержит ' + a + ' объектов и ' + (b * 4) + ' аттрибутов';
+  }
 
   if (Array.isArray(a) && Array.isArray(b)) {
     var square = 0;
     for (var j = 0; j < a.length; j++) {
-      (a[j]) *= (b[j]);
-      square += (a[j]);
+      square += a[j] * b[j];
     }
     return 'Общая площадь артефактов сжатия: ' + square + ' пикселей';
   }
@@ -24,7 +26,7 @@ function getMessage(a, b){
   if (Array.isArray(a)) {
     var sum = 0;
     for (var i = 0; i < a.length; i++) {
-      sum += (a[i]);
+      sum += a[i];
     }
     return 'Количество красных точек во всех строчках изображения: ' + sum;
   }
