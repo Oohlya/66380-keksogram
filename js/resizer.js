@@ -109,7 +109,21 @@
       // Отрисовка изображения на холсте. Параметры задают изображение, которое
       // нужно отрисовать и координаты его верхнего левого угла.
       // Координаты задаются от центра холста.
+
+      // Oohlya's code see below
       this._ctx.drawImage(this._image, displX, displY);
+      this._ctx.fillStyle = 'rgba(0,0,0,0.8)';
+      this._ctx.fillRect (displX, displY, this._container.width, this._container.height);
+      this._ctx.clearRect(
+        (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
+        (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
+        this._resizeConstraint.side - this._ctx.lineWidth / 2,
+        this._resizeConstraint.side - this._ctx.lineWidth / 2);
+      this._ctx.drawImage(this._image, this._resizeConstraint.x, this._resizeConstraint.y, this._resizeConstraint.side, this._resizeConstraint.side,
+        (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
+        (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
+        this._resizeConstraint.side - this._ctx.lineWidth / 2,
+        this._resizeConstraint.side - this._ctx.lineWidth / 2);
 
       // Отрисовка прямоугольника, обозначающего область изображения после
       // кадрирования. Координаты задаются от центра.
