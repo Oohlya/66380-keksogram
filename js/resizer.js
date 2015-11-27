@@ -113,7 +113,7 @@
       // Oohlya's code see below
       this._ctx.drawImage(this._image, displX, displY);
       this._ctx.fillStyle = 'rgba(0,0,0,0.8)';
-      this._ctx.fillRect (displX, displY, this._container.width, this._container.height);
+      this._ctx.fillRect(displX, displY, this._container.width, this._container.height);
       this._ctx.clearRect(
         (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
         (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
