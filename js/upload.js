@@ -68,14 +68,6 @@
   }
 
   /**
-   * Проверяет, валидны ли данные, в форме кадрирования.
-   * @return {boolean}
-   */
-  function resizeFormIsValid() {
-    return true;
-  }
-
-  /**
    * Форма загрузки изображения.
    * @type {HTMLFormElement}
    */
@@ -86,6 +78,11 @@
    * @type {HTMLFormElement}
    */
   var resizeForm = document.forms['upload-resize'];
+
+  /**
+   * Forward button for resize form
+   */
+  var resizeFwd = document.forms['resize-fwd'];
 
   /**
    * Форма добавления фильтра.
@@ -195,32 +192,29 @@
 
   resizeX.min = 0;
   resizeY.min = 0;
+  resizeSize.min = 0;
 
-  function resizerLimit(xElement, yElement, sizeElement) {
-    xElement.max = currentResizer._image.naturalWidth;
-    yElement.max = currentResizer._image.naturalHeight;
-    (xElement + sizeElement).max = currentResizer._image.naturalWidth;
-    (yElement + sizeElement).max = currentResizer._image.naturalHeight;
+  function resizerLimit() {
+    resizeX.max = currentResizer._image.naturalWidth - resizeSize.value;
+    resizeY.max = currentResizer._image.naturalHeight - resizeSize.value;
+    resizeSize.max = Math.min(
+      currentResizer._image.naturalWidth - resizeX.value,
+      currentResizer._image.naturalHeight - resizeY.value);
   }
 
-  var INITIAL_SIDE_RATIO = 0.75;
-  resizeSize.value = Math.min(
-    currentResizer._image.naturalWidth * INITIAL_SIDE_RATIO,
-    currentResizer._image.naturalHeight * INITIAL_SIDE_RATIO);
+  resizeX.onchange = resizeY.onchange = resizeSize.onchange = resizerLimit;
 
-  resizerLimit(resizeX, resizeY, resizeSize.value);
-  resizeX.value = resizeX.min;
-  resizeY.value = resizeY.min;
-
-  resizeX.onchange = function() {
-    resizerLimit(resizeX, resizeY, resizeSize);
-  };
-  resizeY.onchange = function() {
-    resizerLimit(resizeX, resizeY, resizeSize);
-  };
-  resizeSize.onchange = function() {
-    resizerLimit(resizeX, resizeY, resizeSize);
-  };
+  /**
+   * Проверяет, валидны ли данные, в форме кадрирования.
+   * @return {boolean}
+   */
+  function resizeFormIsValid() {
+    if (resizeX.value + resizeSize.value <= currentResizer._image.naturalWidth && resizeY.value + resizeSize.value <= currentResizer._image.naturalHeight) {
+      return true;
+    } else {
+      resizeFwd.disabled = true;
+    }
+  }
 
   /**
    * Обработка отправки формы кадрирования. Если форма валидна, экспортирует
@@ -235,6 +229,8 @@
 
       resizeForm.classList.add('invisible');
       filterForm.classList.remove('invisible');
+    } else {
+      resizeFwd.disabled = true;
     }
   };
 
