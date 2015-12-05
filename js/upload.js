@@ -187,6 +187,8 @@
   };
 
   // resizeForm validation
+  var formElement = document.forms('upload-resize-controls');
+
   var resizeX = formElement['resize-x'];
   var resizeY = formElement['resize-y'];
   var resizeSize = formElement['resize-size'];
@@ -210,7 +212,13 @@
   resizeX.value = resizeX.min;
   resizeY.value = resizeY.min;
 
-  resizeX.onchange, resizeY.onchange, resizeSize.onchange = function() {
+  resizeX.onchange = function() {
+    resizerLimit(resizeX, resizeY, resizeSize);
+  };
+  resizeY.onchange = function() {
+    resizerLimit(resizeX, resizeY, resizeSize);
+  };
+  resizeSize.onchange = function() {
     resizerLimit(resizeX, resizeY, resizeSize);
   };
 
