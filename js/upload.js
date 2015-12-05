@@ -186,6 +186,34 @@
     uploadForm.classList.remove('invisible');
   };
 
+  // resizeForm validation
+  var resizeX = formElement['resize-x'];
+  var resizeY = formElement['resize-y'];
+  var resizeSize = formElement['resize-size'];
+
+  resizeX.min = 0;
+  resizeY.min = 0;
+
+  function resizerLimit(xElement, yElement, sizeElement) {
+    xElement.max = currentResizer._image.naturalWidth;
+    yElement.max = currentResizer._image.naturalHeight;
+    (xElement + sizeElement).max = currentResizer._image.naturalWidth;
+    (yElement + sizeElement).max = currentResizer._image.naturalHeight;
+  }
+
+  var INITIAL_SIDE_RATIO = 0.75;
+  resizeSize.value = Math.min(
+    currentResizer._image.naturalWidth * INITIAL_SIDE_RATIO,
+    currentResizer._image.naturalHeight * INITIAL_SIDE_RATIO);
+
+  resizerLimit(resizeX, resizeY, resizeSize.value);
+  resizeX.value = resizeX.min;
+  resizeY.value = resizeY.min;
+
+  resizeX.onchange, resizeY.onchange, resizeSize.onchange = function() {
+    resizerLimit(resizeX, resizeY, resizeSize);
+  };
+
   /**
    * Обработка отправки формы кадрирования. Если форма валидна, экспортирует
    * кропнутое изображение в форму добавления фильтра и показывает ее.
