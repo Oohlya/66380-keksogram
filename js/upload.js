@@ -209,7 +209,7 @@
    * @return {boolean}
    */
   function resizeFormIsValid() {
-    if (resizeX.value + resizeSize.value <= currentResizer._image.naturalWidth && resizeY.value + resizeSize.value <= currentResizer._image.naturalHeight) {
+    if (resizeX.value + resizeSize.value >= currentResizer._image.naturalWidth && resizeY.value + resizeSize.value >= currentResizer._image.naturalHeight) {
       return true;
     } else {
       resizeFwd.disabled = true;
@@ -229,8 +229,6 @@
 
       resizeForm.classList.add('invisible');
       filterForm.classList.remove('invisible');
-    } else {
-      resizeFwd.disabled = true;
     }
   };
 
