@@ -80,11 +80,6 @@
   var resizeForm = document.forms['upload-resize'];
 
   /**
-   * Forward button for resize form
-   */
-  var resizeFwd = document.forms['resize-fwd'];
-
-  /**
    * Форма добавления фильтра.
    * @type {HTMLFormElement}
    */
@@ -184,11 +179,16 @@
   };
 
   // resizeForm validation
-  var formElement = document.forms('upload-resize-controls');
+  var formElement = document.forms['upload-resize'];
 
   var resizeX = formElement['resize-x'];
   var resizeY = formElement['resize-y'];
   var resizeSize = formElement['resize-size'];
+
+  /**
+   * Forward button for resize form
+   */
+  var resizeFwd = formElement['resize-fwd'];
 
   resizeX.min = 0;
   resizeY.min = 0;
