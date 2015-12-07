@@ -200,6 +200,7 @@
     resizeSize.max = Math.min(
       currentResizer._image.naturalWidth - resizeX.value,
       currentResizer._image.naturalHeight - resizeY.value);
+    resizeFwd.disabled = !resizeFormIsValid();
   }
 
   resizeX.onchange = resizeY.onchange = resizeSize.onchange = resizerLimit;
@@ -209,11 +210,7 @@
    * @return {boolean}
    */
   function resizeFormIsValid() {
-    if (resizeX.value + resizeSize.value >= currentResizer._image.naturalWidth && resizeY.value + resizeSize.value >= currentResizer._image.naturalHeight) {
-      return true;
-    } else {
-      resizeFwd.disabled = true;
-    }
+    return resizeX.value + resizeSize.value >= currentResizer._image.naturalWidth && resizeY.value + resizeSize.value >= currentResizer._image.naturalHeight;
   }
 
   /**
