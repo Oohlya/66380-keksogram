@@ -68,14 +68,6 @@
   }
 
   /**
-   * Проверяет, валидны ли данные, в форме кадрирования.
-   * @return {boolean}
-   */
-  function resizeFormIsValid() {
-    return true;
-  }
-
-  /**
    * Форма загрузки изображения.
    * @type {HTMLFormElement}
    */
@@ -185,6 +177,41 @@
     resizeForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
   };
+
+  // resizeForm validation
+  var formElement = document.forms['upload-resize'];
+
+  var resizeX = formElement['resize-x'];
+  var resizeY = formElement['resize-y'];
+  var resizeSize = formElement['resize-size'];
+
+  /**
+   * Forward button for resize form
+   */
+  var resizeFwd = formElement['resize-fwd'];
+
+  resizeX.min = 0;
+  resizeY.min = 0;
+  resizeSize.min = 0;
+
+  function resizerLimit() {
+    resizeX.max = currentResizer._image.naturalWidth - resizeSize.value;
+    resizeY.max = currentResizer._image.naturalHeight - resizeSize.value;
+    resizeSize.max = Math.min(
+      currentResizer._image.naturalWidth - resizeX.value,
+      currentResizer._image.naturalHeight - resizeY.value);
+    resizeFwd.disabled = !resizeFormIsValid();
+  }
+
+  resizeX.onchange = resizeY.onchange = resizeSize.onchange = resizerLimit;
+
+  /**
+   * Проверяет, валидны ли данные, в форме кадрирования.
+   * @return {boolean}
+   */
+  function resizeFormIsValid() {
+    return resizeX.value + resizeSize.value >= currentResizer._image.naturalWidth && resizeY.value + resizeSize.value >= currentResizer._image.naturalHeight;
+  }
 
   /**
    * Обработка отправки формы кадрирования. Если форма валидна, экспортирует
