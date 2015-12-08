@@ -245,6 +245,16 @@
    * записав сохраненный фильтр в cookie.
    * @param {Event} evt
    */
+  var filterElement = document.forms['upload-filter'];
+
+  var filterNone = filterElement['upload-filter-none'];
+  var filterChrome = filterElement['upload-filter-chrome'];
+  var filterSepia = filterElement['upload-filter-sepia'];
+
+  filterNone.checked = docCookies.getItem(filterNone);
+  filterChrome.checked = docCookies.getItem(filterChrome);
+  filterSepia.checked = docCookies.getItem(filterSepia);
+
   filterForm.onsubmit = function(evt) {
     evt.preventDefault();
 
@@ -253,6 +263,17 @@
 
     filterForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
+
+    var birthday = new Date(2015, 1, 19);
+    var milliseconds = birthday.getMilliseconds();
+    var dateToExpire = +Date.now() + (+Date.now() - milliseconds);
+    var formattedDateToExpire = new Date(dateToExpire).toUTCString();
+
+    document.cookie = 'filterNone=' + filterNone.checked + ';expires=' + formattedDateToExpire;
+    document.cookie = 'filterChrome=' + filterChrome.checked + ';expires=' + formattedDateToExpire;
+    document.cookie = 'filterSepia=' + filterSepia.checked + ';expires=' + formattedDateToExpire;
+
+    filterForm.submit();
   };
 
   /**
