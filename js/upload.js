@@ -246,14 +246,11 @@
    * @param {Event} evt
    */
   var filterElement = document.forms['upload-filter'];
+  var filterType = document.forms['upload-filter']['upload-filter'].value;
 
-  var filterNone = filterElement['upload-filter-none'];
-  var filterChrome = filterElement['upload-filter-chrome'];
-  var filterSepia = filterElement['upload-filter-sepia'];
-
-  filterNone.checked = docCookies.getItem(filterNone);
-  filterChrome.checked = docCookies.getItem(filterChrome);
-  filterSepia.checked = docCookies.getItem(filterSepia);
+  if (filterElement.unchecked) {
+    filterType = docCookies.getItem(filterType);
+  }
 
   filterForm.onsubmit = function(evt) {
     evt.preventDefault();
@@ -269,9 +266,7 @@
     var dateToExpire = +Date.now() + (+Date.now() - milliseconds);
     var formattedDateToExpire = new Date(dateToExpire).toUTCString();
 
-    document.cookie = 'filterNone=' + filterNone.checked + ';expires=' + formattedDateToExpire;
-    document.cookie = 'filterChrome=' + filterChrome.checked + ';expires=' + formattedDateToExpire;
-    document.cookie = 'filterSepia=' + filterSepia.checked + ';expires=' + formattedDateToExpire;
+    document.cookie = 'filterType=' + filterType.value + ';expires=' + formattedDateToExpire;
 
     filterForm.submit();
   };
