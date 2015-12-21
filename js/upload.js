@@ -246,10 +246,10 @@
    * @param {Event} evt
    */
   var filterElement = document.forms['upload-filter'];
-  var filterType = document.forms['upload-filter']['upload-filter'].value;
+  var filterType = document.forms['upload-filter']['upload-filter'];
 
   if (filterElement.unchecked) {
-    filterType = docCookies.getItem(filterType);
+    filterType = docCookies.getItem(filterType.value);
   }
 
   filterForm.onsubmit = function(evt) {
@@ -266,7 +266,7 @@
     var dateToExpire = +Date.now() + (+Date.now() - milliseconds);
     var formattedDateToExpire = new Date(dateToExpire).toUTCString();
 
-    document.cookie = 'filterType=' + filterType.value + ';expires=' + formattedDateToExpire;
+    docCookies.setItem(filterType, filterType.value, formattedDateToExpire);
 
     filterForm.submit();
   };
